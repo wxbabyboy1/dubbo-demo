@@ -1,12 +1,12 @@
 package com.alibaba.dubbo;
 
 
-import com.alibaba.dubbo.provider.DemoService;
-import com.alibaba.dubbo.provider.GroupDemoService;
+import com.alibaba.dubbo.provider.*;
+import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
+import com.alibaba.dubbo.rpc.service.EchoService;
 import com.alibaba.dubbo.rpc.service.GenericService;
 import com.alibaba.dubbo.validate.ValidationParameter;
-import com.alibaba.dubbo.provider.ValidationService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.validation.ConstraintViolation;
@@ -14,6 +14,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Future;
 
 /**
  * Created by Star on 2018/2/24.
@@ -83,13 +84,39 @@ public class Consumer {
                 System.out.println(entry1.getKey()+" "+entry1.getValue());
             }
         }
+        System.out.println("*****************");
 
         //泛化，传参pojo
         Map<String, Object> hiWorld = new HashMap<String, Object>();
         hiWorld.put("name", "张三");
-
         Object sayHiValue = genericService.$invoke("sayHi", new String[]{"com.alibaba.dubbo.pojo.HiWorld"}, new Object[]{hiWorld});
         System.out.println(sayHiValue);
+        System.out.println("*****************");
 
+        //回声测试，所有服务都自动实现回声测试
+        EchoService echoService = (EchoService) demoService; // 强制转型为EchoService
+        // 回声测试可用性
+        Object status = echoService.$echo("OK");
+        System.out.println(status.equals("OK"));
+//        assert(status.equals("OK"));
+        System.out.println("*********回声测试end********");
+
+        //上下文
+//        ContextAAService contextAAService = (ContextAAService) context.getBean("contextAAService");
+//        contextAAService.xxx();
+
+        //异步调用
+        AsyncDemoAAService asyncAAService = (AsyncDemoAAService) context.getBean("asyncDemoAAService");
+        asyncAAService.findAA();
+        Future<String> aaFuture = RpcContext.getContext().getFuture();
+
+        AsyncDemoBBService asyncBBService = (AsyncDemoBBService) context.getBean("asyncDemoBBService");
+        asyncBBService.findBB();
+        Future<String> bbFuture = RpcContext.getContext().getFuture();
+
+        String aa = aaFuture.get();
+        String bb = bbFuture.get();
+        System.out.println(aa);
+        System.out.println(bb);
     }
 }

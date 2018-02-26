@@ -24,6 +24,19 @@
     <!-- 泛化-->
     <dubbo:reference id="genericDemoService" interface="com.alibaba.dubbo.provider.GenericDemoService" version="1.0.1" generic="true" />
 
+
+    <!-- 上下文
+    <dubbo:reference id="contextAAService" interface="com.alibaba.dubbo.provider.ContextAAService" version="1.0.1" />
+    <dubbo:reference id="contextBBService" interface="com.alibaba.dubbo.provider.ContextBBService" version="1.0.1" />-->
+
+    <!-- 异步调用 -->
+    <dubbo:reference id="asyncDemoAAService" interface="com.alibaba.dubbo.provider.AsyncDemoAAService" version="1.0.1" >
+        <dubbo:method name="findAA" async="true" />
+    </dubbo:reference>
+    <dubbo:reference id="asyncDemoBBService" interface="com.alibaba.dubbo.provider.AsyncDemoBBService" version="1.0.1" >
+        <dubbo:method name="findBB" async="true" />
+    </dubbo:reference>
+
     <!-- 关闭所有服务的启动时检查 (没有提供者时报错)： -->
     <dubbo:consumer check="false" />
 </beans>

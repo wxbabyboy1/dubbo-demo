@@ -26,6 +26,18 @@
     <dubbo:service interface="com.alibaba.dubbo.provider.ValidationService" ref="validationService" version="1.0.1" />
     <bean id="validationService" class="com.alibaba.dubbo.provider.ValidationServiceImpl"/>
 
-    <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
-    <dubbo:provider timeout="1000" retries="1"/>
+    <!-- 上下文
+    <dubbo:service interface="com.alibaba.dubbo.provider.ContextAAService" ref="contextAAService" version="1.0.1" />
+    <bean id="contextAAService" class="com.alibaba.dubbo.provider.ContextAAServiceImpl"/>
+    <dubbo:service interface="com.alibaba.dubbo.provider.ContextBBService" ref="contextBBService" version="1.0.1" />
+    <bean id="contextBBService" class="com.alibaba.dubbo.provider.ContextBBServiceImpl"/> -->
+
+    <!-- 异步调用 -->
+    <dubbo:service interface="com.alibaba.dubbo.provider.AsyncDemoAAService" ref="asyncDemoAAService" version="1.0.1" />
+    <bean id="asyncDemoAAService" class="com.alibaba.dubbo.provider.AsyncDemoAAServiceImpl"/>
+    <dubbo:service interface="com.alibaba.dubbo.provider.AsyncDemoBBService" ref="asyncDemoBBService" version="1.0.1" />
+    <bean id="asyncDemoBBService" class="com.alibaba.dubbo.provider.AsyncDemoBBServiceImpl"/>
+
+    <!-- 设置超时，可查看优先级：文档 5.1XML配置
+    <dubbo:provider timeout="1000" retries="1"/>-->
 </beans>
