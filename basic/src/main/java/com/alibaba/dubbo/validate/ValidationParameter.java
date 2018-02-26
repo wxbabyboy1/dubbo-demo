@@ -1,5 +1,7 @@
 package com.alibaba.dubbo.validate;
 
+import com.alibaba.dubbo.provider.ValidationService;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;

@@ -18,9 +18,13 @@
     <bean id="groupDemoService1" class="com.alibaba.dubbo.provider.GroupDemoService1Impl"/>
     <bean id="groupDemoService2" class="com.alibaba.dubbo.provider.GroupDemoService2Impl"/>
 
-    <!-- 验证
-    <dubbo:service interface="com.alibaba.dubbo.validate.ValidationService" ref="validationService" validation="true" />
-    <bean id="validationService" class="com.alibaba.dubbo.provider.GroupDemoService2Impl"/>-->
+    <!-- 泛化 暴露服务-->
+    <dubbo:service interface="com.alibaba.dubbo.provider.GenericDemoService" ref="genericDemoService" version="1.0.1" />
+    <bean id="genericDemoService" class="com.alibaba.dubbo.provider.GenericDemoServiceImpl"/>
+
+    <!-- 验证 暴露服务-->
+    <dubbo:service interface="com.alibaba.dubbo.provider.ValidationService" ref="validationService" version="1.0.1" />
+    <bean id="validationService" class="com.alibaba.dubbo.provider.ValidationServiceImpl"/>
 
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="1000" retries="1"/>

@@ -19,7 +19,10 @@
     <dubbo:reference id="mergeService2" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa,bbb" merger="my"/>
 
     <!-- 验证-->
-    <dubbo:reference id="validationService" interface="com.alibaba.dubbo.validate.ValidationService" validation="true" />
+    <dubbo:reference id="validationService" interface="com.alibaba.dubbo.provider.ValidationService" version="1.0.1" validation="true" />
+
+    <!-- 泛化-->
+    <dubbo:reference id="genericDemoService" interface="com.alibaba.dubbo.provider.GenericDemoService" version="1.0.1" generic="true" />
 
     <!-- 关闭所有服务的启动时检查 (没有提供者时报错)： -->
     <dubbo:consumer check="false" />

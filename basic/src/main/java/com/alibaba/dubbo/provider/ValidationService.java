@@ -1,4 +1,6 @@
-package com.alibaba.dubbo.validate;
+package com.alibaba.dubbo.provider;
+
+import com.alibaba.dubbo.validate.ValidationParameter;
 
 import javax.validation.constraints.NotNull;
 

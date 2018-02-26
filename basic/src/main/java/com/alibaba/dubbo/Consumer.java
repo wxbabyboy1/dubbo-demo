@@ -4,12 +4,15 @@ package com.alibaba.dubbo;
 import com.alibaba.dubbo.provider.DemoService;
 import com.alibaba.dubbo.provider.GroupDemoService;
 import com.alibaba.dubbo.rpc.RpcException;
+import com.alibaba.dubbo.rpc.service.GenericService;
 import com.alibaba.dubbo.validate.ValidationParameter;
-import com.alibaba.dubbo.validate.ValidationService;
+import com.alibaba.dubbo.provider.ValidationService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -53,7 +56,7 @@ public class Consumer {
         System.out.println("*****************");
 
         ValidationService validationService = (ValidationService)context.getBean("validationService");
-        // Error
+        //Error
         try {
             ValidationParameter parameter = new ValidationParameter();
             validationService.save(parameter);
@@ -63,6 +66,30 @@ public class Consumer {
             Set<ConstraintViolation<?>> violations = ve.getConstraintViolations(); // 可以拿到一个验证错误详细信息的集合
             System.out.println(violations);
         }
+        System.out.println("*****************");
+
+        //泛化,获取pojo
+        GenericService genericService = (GenericService) context.getBean("genericDemoService");
+        Object result = genericService.$invoke("getHi", new String[] { "java.lang.String" }, new Object[] { "World" });
+        HashMap<String, Object> userMap=(HashMap<String, Object>) result;
+        for(Map.Entry<String, Object> entry1: userMap.entrySet()){
+            if(entry1.getValue() instanceof HashMap){
+                HashMap<String, Object> computerMap=(HashMap<String, Object>) entry1.getValue();
+                System.out.println(entry1.getKey());
+                for(Map.Entry<String, Object> entry: computerMap.entrySet()){
+                    System.out.println("\t"+entry.getValue());
+                }
+            }else{
+                System.out.println(entry1.getKey()+" "+entry1.getValue());
+            }
+        }
+
+        //泛化，传参pojo
+        Map<String, Object> hiWorld = new HashMap<String, Object>();
+        hiWorld.put("name", "张三");
+
+        Object sayHiValue = genericService.$invoke("sayHi", new String[]{"com.alibaba.dubbo.pojo.HiWorld"}, new Object[]{hiWorld});
+        System.out.println(sayHiValue);
 
     }
 }
