@@ -107,11 +107,13 @@ public class Consumer {
 
         //异步调用
         AsyncDemoAAService asyncAAService = (AsyncDemoAAService) context.getBean("asyncDemoAAService");
-        asyncAAService.findAA();
+        String aa1 = asyncAAService.findAA();
+        System.out.println(aa1);
         Future<String> aaFuture = RpcContext.getContext().getFuture();
 
         AsyncDemoBBService asyncBBService = (AsyncDemoBBService) context.getBean("asyncDemoBBService");
-        asyncBBService.findBB();
+        String bb1 = asyncBBService.findBB();
+        System.out.println(bb1);
         Future<String> bbFuture = RpcContext.getContext().getFuture();
 
         String aa = aaFuture.get();

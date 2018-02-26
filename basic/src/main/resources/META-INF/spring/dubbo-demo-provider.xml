@@ -38,6 +38,6 @@
     <dubbo:service interface="com.alibaba.dubbo.provider.AsyncDemoBBService" ref="asyncDemoBBService" version="1.0.1" />
     <bean id="asyncDemoBBService" class="com.alibaba.dubbo.provider.AsyncDemoBBServiceImpl"/>
 
-    <!-- 设置超时，可查看优先级：文档 5.1XML配置
-    <dubbo:provider timeout="1000" retries="1"/>-->
+    <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
+    <dubbo:provider timeout="10000" retries="1"/>
 </beans>
