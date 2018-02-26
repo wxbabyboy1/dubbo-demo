@@ -52,7 +52,7 @@ public class Consumer {
 
         GroupDemoService mergeService2 = (GroupDemoService) context.getBean("mergeService2");
         for(Integer num : mergeService2.sayGroup()){
-            System.out.println(num);
+            System.out.println(num); 1
         }
         System.out.println("*****************");
 
