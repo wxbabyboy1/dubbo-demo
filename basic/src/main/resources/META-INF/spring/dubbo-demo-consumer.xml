@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="demo-consumer"/>
+
+    <!-- 协议 -->
+    <!--
+    <dubbo:registry address="multicast://224.5.6.7:1234"/>-->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183" />
+    <dubbo:reference id="demoService" interface="com.alibaba.dubbo.provider.DemoService" version="1.0.0"/>
+
+    <!-- 分组-->
+    <dubbo:reference id="groupDemoService1" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa"/>
+    <dubbo:reference id="groupDemoService2" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="bbb"/>
+
+    <dubbo:reference id="mergeService1" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa,bbb" merger="true"/>
+    <dubbo:reference id="mergeService2" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa,bbb" merger="my"/>
+
+    <!-- 验证-->
+    <dubbo:reference id="validationService" interface="com.alibaba.dubbo.validate.ValidationService" validation="true" />
+
+    <!-- 关闭所有服务的启动时检查 (没有提供者时报错)： -->
+    <dubbo:consumer check="false" />
+</beans>

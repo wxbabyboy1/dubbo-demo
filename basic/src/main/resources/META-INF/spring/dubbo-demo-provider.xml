@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="demo-provider"/>
+    <!--
+    <dubbo:registry address="multicast://224.5.6.7:1234"/>-->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183" />
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <dubbo:service interface="com.alibaba.dubbo.provider.DemoService" ref="demoService" version="1.0.0" filter="countFilter,accessTimeOutFilter"/>
+    <bean id="demoService" class="com.alibaba.dubbo.provider.DemoServiceImpl"/>
+
+    <!-- 分组 -->
+    <dubbo:service interface="com.alibaba.dubbo.provider.GroupDemoService" ref="groupDemoService1" version="1.0.1" group="aaa"/>
+    <dubbo:service interface="com.alibaba.dubbo.provider.GroupDemoService" ref="groupDemoService2"  version="1.0.1" group="bbb"/>
+    <bean id="groupDemoService1" class="com.alibaba.dubbo.provider.GroupDemoService1Impl"/>
+    <bean id="groupDemoService2" class="com.alibaba.dubbo.provider.GroupDemoService2Impl"/>
+
+    <!-- 验证
+    <dubbo:service interface="com.alibaba.dubbo.validate.ValidationService" ref="validationService" validation="true" />
+    <bean id="validationService" class="com.alibaba.dubbo.provider.GroupDemoService2Impl"/>-->
+
+    <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
+    <dubbo:provider timeout="1000" retries="1"/>
+</beans>
