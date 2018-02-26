@@ -38,6 +38,16 @@
     <dubbo:service interface="com.alibaba.dubbo.provider.AsyncDemoBBService" ref="asyncDemoBBService" version="1.0.1" />
     <bean id="asyncDemoBBService" class="com.alibaba.dubbo.provider.AsyncDemoBBServiceImpl"/>
 
+    <!-- 参数回调 -->
+    <bean id="callbackService" class="com.callback.impl.CallbackServiceImpl" />
+    <dubbo:service interface="com.callback.CallbackService" ref="callbackService" connections="1" callbacks="1000">
+        <dubbo:method name="addListener">
+            <dubbo:argument index="1" callback="true" />
+            <!--也可以通过指定类型的方式-->
+            <!--<dubbo:argument type="com.demo.CallbackListener" callback="true" />-->
+        </dubbo:method>
+    </dubbo:service>
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>

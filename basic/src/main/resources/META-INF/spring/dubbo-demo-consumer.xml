@@ -15,6 +15,7 @@
     <dubbo:reference id="groupDemoService1" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa"/>
     <dubbo:reference id="groupDemoService2" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="bbb"/>
 
+    <!-- 分组聚合 -->
     <dubbo:reference id="mergeService1" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa,bbb" merger="true"/>
     <dubbo:reference id="mergeService2" interface="com.alibaba.dubbo.provider.GroupDemoService" version="1.0.1" group="aaa,bbb" merger="my"/>
 
@@ -36,6 +37,9 @@
     <dubbo:reference id="asyncDemoBBService" interface="com.alibaba.dubbo.provider.AsyncDemoBBService" version="1.0.1" >
         <dubbo:method name="findBB" async="true" />
     </dubbo:reference>
+
+    <!-- 参数回调 -->
+    <dubbo:reference id="callbackService" interface="com.callback.CallbackService" />
 
     <!-- 关闭所有服务的启动时检查 (没有提供者时报错)： -->
     <dubbo:consumer check="false" />

@@ -7,6 +7,8 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.service.EchoService;
 import com.alibaba.dubbo.rpc.service.GenericService;
 import com.alibaba.dubbo.validate.ValidationParameter;
+import com.callback.CallbackListener;
+import com.callback.CallbackService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.validation.ConstraintViolation;
@@ -24,6 +26,8 @@ public class Consumer {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
                 new String[]{"META-INF/spring/dubbo-demo-consumer.xml"});
         context.start();
+
+        /*
         // obtain proxy object for remote invocation
         DemoService demoService = (DemoService) context.getBean("demoService");
         // execute remote invocation
@@ -31,8 +35,17 @@ public class Consumer {
         // show the result
         System.out.println(hello);
 
+        //回声测试，所有服务都自动实现回声测试
+        EchoService echoService = (EchoService) demoService; // 强制转型为EchoService
+        // 回声测试可用性
+        Object status = echoService.$echo("OK");
+        System.out.println(status.equals("OK"));
+//        assert(status.equals("OK"));
+        System.out.println("*********回声测试end********");
+        */
 
-        GroupDemoService group1 = (GroupDemoService) context.getBean("groupDemoService1");
+        //分组
+        /*GroupDemoService group1 = (GroupDemoService) context.getBean("groupDemoService1");
         for(Integer num : group1.sayGroup()){
             System.out.println(num);
         }
@@ -42,21 +55,24 @@ public class Consumer {
         for(Integer num : group2.sayGroup()){
             System.out.println(num);
         }
-        System.out.println("*****************");
+        System.out.println("*****************");*/
 
-        GroupDemoService mergeService1 = (GroupDemoService) context.getBean("mergeService1");
+        //分组聚合
+        /*GroupDemoService mergeService1 = (GroupDemoService) context.getBean("mergeService1");
         for(Integer num : mergeService1.sayGroup()){
             System.out.println(num);
         }
-        System.out.println("*****************");
+        System.out.println("*****************");*/
 
-        GroupDemoService mergeService2 = (GroupDemoService) context.getBean("mergeService2");
+        //分组聚合，自定义扩展点合并
+        /*GroupDemoService mergeService2 = (GroupDemoService) context.getBean("mergeService2");
         for(Integer num : mergeService2.sayGroup()){
             System.out.println(num);
         }
-        System.out.println("*****************");
+        System.out.println("*****************");*/
 
-        ValidationService validationService = (ValidationService)context.getBean("validationService");
+        //验证
+        /*ValidationService validationService = (ValidationService)context.getBean("validationService");
         //Error
         try {
             ValidationParameter parameter = new ValidationParameter();
@@ -67,10 +83,10 @@ public class Consumer {
             Set<ConstraintViolation<?>> violations = ve.getConstraintViolations(); // 可以拿到一个验证错误详细信息的集合
             System.out.println(violations);
         }
-        System.out.println("*****************");
+        System.out.println("*****************");*/
 
         //泛化,获取pojo
-        GenericService genericService = (GenericService) context.getBean("genericDemoService");
+        /*GenericService genericService = (GenericService) context.getBean("genericDemoService");
         Object result = genericService.$invoke("getHi", new String[] { "java.lang.String" }, new Object[] { "World" });
         HashMap<String, Object> userMap=(HashMap<String, Object>) result;
         for(Map.Entry<String, Object> entry1: userMap.entrySet()){
@@ -91,22 +107,14 @@ public class Consumer {
         hiWorld.put("name", "张三");
         Object sayHiValue = genericService.$invoke("sayHi", new String[]{"com.alibaba.dubbo.pojo.HiWorld"}, new Object[]{hiWorld});
         System.out.println(sayHiValue);
-        System.out.println("*****************");
-
-        //回声测试，所有服务都自动实现回声测试
-        EchoService echoService = (EchoService) demoService; // 强制转型为EchoService
-        // 回声测试可用性
-        Object status = echoService.$echo("OK");
-        System.out.println(status.equals("OK"));
-//        assert(status.equals("OK"));
-        System.out.println("*********回声测试end********");
+        System.out.println("*****************");*/
 
         //上下文
-//        ContextAAService contextAAService = (ContextAAService) context.getBean("contextAAService");
-//        contextAAService.xxx();
+        /*ContextAAService contextAAService = (ContextAAService) context.getBean("contextAAService");
+        contextAAService.xxx();*/
 
         //异步调用
-        AsyncDemoAAService asyncAAService = (AsyncDemoAAService) context.getBean("asyncDemoAAService");
+        /*AsyncDemoAAService asyncAAService = (AsyncDemoAAService) context.getBean("asyncDemoAAService");
         String aa1 = asyncAAService.findAA();
         System.out.println(aa1);
         Future<String> aaFuture = RpcContext.getContext().getFuture();
@@ -119,6 +127,17 @@ public class Consumer {
         String aa = aaFuture.get();
         String bb = bbFuture.get();
         System.out.println(aa);
-        System.out.println(bb);
+        System.out.println(bb);*/
+
+        //参数回调
+        CallbackService callbackService = (CallbackService) context.getBean("callbackService");
+
+        callbackService.addListener("http://10.20.160.198/wiki/display/dubbo/foo.bar", new CallbackListener(){
+            public void changed(String msg) {
+                System.out.println("callback1:" + msg);
+            }
+        });
+
+        Thread.sleep(9000);
     }
 }
