@@ -1,7 +1,11 @@
 package com.alibaba.dubbo;
 
 
+import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.provider.*;
+import com.alibaba.dubbo.registry.Registry;
+import com.alibaba.dubbo.registry.RegistryFactory;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.service.EchoService;
@@ -34,6 +38,7 @@ public class Consumer {
         String hello = demoService.sayHello("world");
         // show the result
         System.out.println(hello);
+
 
         //回声测试，所有服务都自动实现回声测试
         EchoService echoService = (EchoService) demoService; // 强制转型为EchoService
@@ -130,7 +135,7 @@ public class Consumer {
         System.out.println(bb);*/
 
         //参数回调
-        CallbackService callbackService = (CallbackService) context.getBean("callbackService");
+        /*CallbackService callbackService = (CallbackService) context.getBean("callbackService");
 
         callbackService.addListener("http://10.20.160.198/wiki/display/dubbo/foo.bar", new CallbackListener(){
             public void changed(String msg) {
@@ -138,6 +143,14 @@ public class Consumer {
             }
         });
 
-        Thread.sleep(9000);
+        Thread.sleep(9000);*/
+
+        RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
+        Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
+        registry.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=force:return+null"));
+
+        DemoService demoService = (DemoService) context.getBean("demoService");
+        String hello = demoService.sayHello("world");
+        System.out.println(hello);
     }
 }
