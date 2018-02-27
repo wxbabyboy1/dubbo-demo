@@ -52,6 +52,10 @@
     <dubbo:service interface="com.event.EventService" ref="eventService" version="1.0.0"/>
     <bean id="eventService" class="com.event.EventServiceImpl"/>
 
+    <!--  本地存根 调用provider -->
+    <dubbo:service interface="com.stub.StubDemoService" ref="stubDemoService" stub="com.stub.StubDemoServiceStub" />
+    <bean id="stubDemoService" class="com.stub.StubServiceImpl"/>
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>

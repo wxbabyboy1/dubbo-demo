@@ -1,10 +1,7 @@
 package com;
 
 
-import com.event.EventService;
-import com.event.NotifyImpl;
-import com.event.Person;
-import junit.framework.Assert;
+import com.stub.StubDemoService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -131,7 +128,7 @@ public class Consumer {
         Thread.sleep(9000);*/
 
         //事件通知
-        EventService eventService = (EventService) context.getBean("eventService");
+        /*EventService eventService = (EventService) context.getBean("eventService");
         NotifyImpl notify = (NotifyImpl) context.getBean("demoCallback");
         int requestId = 2;
         Person ret = eventService.get(requestId);
@@ -145,7 +142,12 @@ public class Consumer {
             }
         }
         Assert.assertEquals(requestId, notify.ret.get(requestId).getId());
-        System.out.println(requestId == notify.ret.get(requestId).getId());
+        System.out.println(requestId == notify.ret.get(requestId).getId());*/
+
+        //本地存根
+        StubDemoService stubDemoService = (StubDemoService) context.getBean("stubDemoService");
+        String stubSayHello = stubDemoService.sayHello("world");
+        System.out.println(stubSayHello);
 
         //服务降级
         /*RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
