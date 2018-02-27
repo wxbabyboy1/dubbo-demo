@@ -41,6 +41,12 @@
     <!-- 参数回调 -->
     <dubbo:reference id="callbackService" interface="com.callback.CallbackService" />
 
+    <!-- 事件通知 -->
+    <bean id ="demoCallback" class = "com.event.NotifyImpl" />
+    <dubbo:reference id="eventService" interface="com.event.EventService" version="1.0.0" >
+        <dubbo:method name="get" async="true" onreturn = "demoCallback.onreturn" onthrow="demoCallback.onthrow" />
+    </dubbo:reference>
+
     <!-- 关闭所有服务的启动时检查 (没有提供者时报错)： -->
     <dubbo:consumer check="false" />
 </beans>

@@ -1,26 +1,11 @@
 package com.alibaba.dubbo;
 
 
-import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.extension.ExtensionLoader;
-import com.alibaba.dubbo.provider.*;
-import com.alibaba.dubbo.registry.Registry;
-import com.alibaba.dubbo.registry.RegistryFactory;
-import com.alibaba.dubbo.rpc.RpcContext;
-import com.alibaba.dubbo.rpc.RpcException;
-import com.alibaba.dubbo.rpc.service.EchoService;
-import com.alibaba.dubbo.rpc.service.GenericService;
-import com.alibaba.dubbo.validate.ValidationParameter;
-import com.callback.CallbackListener;
-import com.callback.CallbackService;
+import com.event.EventService;
+import com.event.NotifyImpl;
+import com.event.Person;
+import junit.framework.Assert;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Future;
 
 /**
  * Created by Star on 2018/2/24.
@@ -145,12 +130,36 @@ public class Consumer {
 
         Thread.sleep(9000);*/
 
-        RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
-        Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
-        registry.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=force:return+null"));
+        //事件通知
+        EventService eventService = (EventService) context.getBean("eventService");
+        NotifyImpl notify = (NotifyImpl) context.getBean("demoCallback");
+        int requestId = 2;
+        Person ret = eventService.get(requestId);
+        System.out.println(null == ret);
+        //for Test：只是用来说明callback正常被调用，业务具体实现自行决定.
+        for (int i = 0; i < 10; i++) {
+            if (!notify.ret.containsKey(requestId)) {
+                Thread.sleep(200);
+            } else {
+                break;
+            }
+        }
+        Assert.assertEquals(requestId, notify.ret.get(requestId).getId());
+        System.out.println(requestId == notify.ret.get(requestId).getId());
 
+        //服务降级
+        /*RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
+        Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
+        registry.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=force:return+hi"));
+
+//        Registry registry2 = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2182"));
+//        registry2.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=fail:return+null"));
+
+//        Registry registry3 = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2183"));
+//        registry3.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=fail:return+null"));
+        Thread.sleep(1000);
         DemoService demoService = (DemoService) context.getBean("demoService");
         String hello = demoService.sayHello("world");
-        System.out.println(hello);
+        System.out.println("降级：" + hello);*/
     }
 }

@@ -28,7 +28,7 @@ public class CallbackServiceImpl implements CallbackService {
                             }
                         }
                         Thread.sleep(5000); // 定时触发变更通知
-                        System.out.println("5000");
+//                        System.out.println("5000");
                     } catch (Throwable t) { // 防御容错
                         t.printStackTrace();
                     }
