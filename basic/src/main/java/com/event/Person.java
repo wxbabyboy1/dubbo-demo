@@ -1,9 +1,11 @@
 package com.event;
 
+import java.io.Serializable;
+
 /**
  * Created by ZhaGuolong on 2018/2/27.
  */
-public class Person {
+public class Person implements Serializable{
     private int id;
     private String name;
     private int num;

@@ -5,6 +5,7 @@ package com.event;
  */
 public class EventServiceImpl implements EventService {
     public Person get(int id) {
+//        int a = 1/0;
         return new Person(id, "charles`son", 4);
     }
 }

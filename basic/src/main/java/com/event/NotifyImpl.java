@@ -17,5 +17,6 @@ public class NotifyImpl implements Notify {
 
     public void onthrow(Throwable ex, Integer id) {
         errors.put(id, ex);
+        System.out.println("errors:" + ex);
     }
 }
