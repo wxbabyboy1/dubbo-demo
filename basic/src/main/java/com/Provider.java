@@ -1,4 +1,4 @@
-package com.alibaba.dubbo;
+package com;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
