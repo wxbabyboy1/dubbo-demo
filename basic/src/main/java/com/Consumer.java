@@ -1,6 +1,12 @@
 package com;
 
 
+import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.common.extension.ExtensionLoader;
+import com.alibaba.dubbo.provider.DemoService;
+import com.alibaba.dubbo.registry.Registry;
+import com.alibaba.dubbo.registry.RegistryFactory;
+import com.mock.DescMockService;
 import com.mock.MockDemoService;
 import com.stub.StubDemoService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -156,18 +162,17 @@ public class Consumer {
         System.out.println(mockSayHello);
 
         //服务降级
-        /*RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
-        Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
-        registry.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=force:return+hi"));
+//        RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();
+//        Registry registry = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2181"));
+//        registry.register(URL.valueOf("override://0.0.0.0/com.mock.DescMockService?category=configurators&dynamic=false&application=demo-provider&mock=force:return+123b"));
 
 //        Registry registry2 = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2182"));
 //        registry2.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=fail:return+null"));
 
 //        Registry registry3 = registryFactory.getRegistry(URL.valueOf("zookeeper://127.0.0.1:2183"));
 //        registry3.register(URL.valueOf("override://0.0.0.0/com.alibaba.dubbo.provider.DemoService?category=configurators&dynamic=false&application=demo-provider&mock=fail:return+null"));
-        Thread.sleep(1000);
-        DemoService demoService = (DemoService) context.getBean("demoService");
+        DescMockService demoService = (DescMockService) context.getBean("descMockService");
         String hello = demoService.sayHello("world");
-        System.out.println("降级：" + hello);*/
+        System.out.println("降级：" + hello);
     }
 }

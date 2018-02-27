@@ -60,6 +60,10 @@
     <dubbo:service interface="com.mock.MockDemoService" ref="mockDemoService" mock="com.mock.MockDemoServiceMock" />
     <bean id="mockDemoService" class="com.mock.MockDemoServiceImpl"/>
 
+    <!-- 服务降级 -->
+    <dubbo:service interface="com.mock.DescMockService" ref="descMockService" />
+    <bean id="descMockService" class="com.mock.DescMockServiceImpl"/>
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>

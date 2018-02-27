@@ -53,6 +53,9 @@
     <!-- 本地伪装 -->
     <dubbo:reference id="mockDemoService" interface="com.mock.MockDemoService" />
 
+    <!-- 服务降级-->
+    <dubbo:reference id="descMockService" interface="com.mock.DescMockService" />
+
     <!-- 关闭所有服务的启动时检查 (没有提供者时报错)： -->
     <dubbo:consumer check="false" />
 </beans>
