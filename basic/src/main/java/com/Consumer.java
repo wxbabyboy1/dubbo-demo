@@ -1,6 +1,7 @@
 package com;
 
 
+import com.mock.MockDemoService;
 import com.stub.StubDemoService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -145,9 +146,14 @@ public class Consumer {
         System.out.println(requestId == notify.ret.get(requestId).getId());*/
 
         //本地存根
-        StubDemoService stubDemoService = (StubDemoService) context.getBean("stubDemoService");
+        /*StubDemoService stubDemoService = (StubDemoService) context.getBean("stubDemoService");
         String stubSayHello = stubDemoService.sayHello("world");
-        System.out.println(stubSayHello);
+        System.out.println(stubSayHello);*/
+
+        //本地伪装
+        MockDemoService mockDemoService = (MockDemoService) context.getBean("mockDemoService");
+        String mockSayHello = mockDemoService.sayHello("world");
+        System.out.println(mockSayHello);
 
         //服务降级
         /*RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();

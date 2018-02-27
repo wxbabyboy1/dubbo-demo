@@ -56,6 +56,10 @@
     <dubbo:service interface="com.stub.StubDemoService" ref="stubDemoService" stub="com.stub.StubDemoServiceStub" />
     <bean id="stubDemoService" class="com.stub.StubServiceImpl"/>
 
+    <!-- 本地伪装-->
+    <dubbo:service interface="com.mock.MockDemoService" ref="mockDemoService" mock="com.mock.MockDemoServiceMock" />
+    <bean id="mockDemoService" class="com.mock.MockDemoServiceImpl"/>
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>
