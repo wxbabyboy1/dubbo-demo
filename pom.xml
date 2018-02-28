@@ -13,6 +13,9 @@
         <module>provider-xml</module>
         <module>consumer-xml</module>
         <module>api-xml</module>
+        <module>parent-annotation</module>
+        <module>provider-annotation</module>
+        <module>consumer-annotation</module>
     </modules>
 
 </project>
