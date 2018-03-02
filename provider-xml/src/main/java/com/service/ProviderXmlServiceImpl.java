@@ -1,6 +1,8 @@
 package com.service;
 
 
+import java.time.LocalDateTime;
+
 /**
  * Created by Star on 2018/2/24.
  */
@@ -11,6 +13,6 @@ public class ProviderXmlServiceImpl implements ProviderXmlService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "Hello " + name;
+        return "Hello " + name + LocalDateTime.now();
     }
 }

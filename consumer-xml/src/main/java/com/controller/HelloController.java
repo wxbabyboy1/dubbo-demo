@@ -17,6 +17,6 @@ public class HelloController {
     public String sayWorld(String name) {
         String say = consumerService.sayHello(name);
         System.out.println(say);
-        return "Hello " + name;
+        return "Hello " + say;
     }
 }
