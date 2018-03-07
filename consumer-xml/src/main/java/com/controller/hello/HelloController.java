@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

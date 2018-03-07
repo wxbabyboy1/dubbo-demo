@@ -15,6 +15,10 @@
     <dubbo:service interface="com.service.P2XmlService" ref="p2XmlService" version="1.0.1" />
     <bean id="p2XmlService" class="com.service.P2XmlServiceImpl"/>
 
+    <!-- filter -->
+    <bean id="filterService" class="com.filter.FilterServiceImpl"/>
+    <dubbo:service interface="com.service.FilterService" ref="filterService" version="1.0.0" filter="countFilter,accessTimeOutFilter"/>
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>

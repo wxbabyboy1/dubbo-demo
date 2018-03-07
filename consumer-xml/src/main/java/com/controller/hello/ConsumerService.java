@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.hello;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.service.P2XmlService;
