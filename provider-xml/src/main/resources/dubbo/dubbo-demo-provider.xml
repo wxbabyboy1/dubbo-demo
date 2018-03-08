@@ -43,10 +43,16 @@
     <dubbo:service interface="com.service.BarService" ref="genericImplService" version="1.0.1" />
 
     <!-- 分组聚合 -->
-    <bean id="groupDemoService1" class="com.group.GroupDemoService1Impl"/>
+    <bean id="mergeService1" class="com.group.GroupDemoService1Impl"/>
+    <dubbo:service interface="com.service.GroupDemoService" ref="mergeService1" version="1.0.1" group="aaa"/>
+    <bean id="mergeService2" class="com.group.GroupDemoService2Impl"/>
+    <dubbo:service interface="com.service.GroupDemoService" ref="mergeService2"  version="1.0.1" group="bbb"/>
+
+    <!-- 分组 -->
     <dubbo:service interface="com.service.GroupDemoService" ref="groupDemoService1" version="1.0.1" group="aaa"/>
-    <bean id="groupDemoService2" class="com.group.GroupDemoService2Impl"/>
+    <bean id="groupDemoService1" class="com.group.GroupDemoService1Impl"/>
     <dubbo:service interface="com.service.GroupDemoService" ref="groupDemoService2"  version="1.0.1" group="bbb"/>
+    <bean id="groupDemoService2" class="com.group.GroupDemoService2Impl"/>
 
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
