@@ -34,6 +34,10 @@
     <bean id="contextBBService" class="com.context.ContextBBServiceImpl"/>
     <dubbo:service interface="com.service.ContextBBService" ref="contextBBService" version="1.0.2" />
 
+    <!-- 泛化引用 只在消费端定义-->
+    <bean id="genericDemoService" class="com.generic.GenericDemoServiceImpl"/>
+    <dubbo:service interface="com.service.GenericDemoService" ref="genericDemoService" version="1.0.1" />
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>
