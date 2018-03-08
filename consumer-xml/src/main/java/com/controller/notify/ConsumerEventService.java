@@ -21,20 +21,16 @@ public class ConsumerEventService {
         Person person = eventService.get(requestId);
         System.out.println(null == person);
         //for Test：只是用来说明callback正常被调用，业务具体实现自行决定.
-        while (!notify.ret.containsKey(requestId)) {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        for(int i=0;i<=10;i++){
+            if (!notify.ret.containsKey(requestId)) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        while (null == person){
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return person.getName();
+        System.out.println(person);
+        return notify.ret.get(requestId).getName();
     }
 }

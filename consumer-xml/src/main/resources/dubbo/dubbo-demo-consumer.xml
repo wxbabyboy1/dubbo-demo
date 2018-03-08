@@ -8,7 +8,7 @@
     <!-- 协议 -->
     <!--
     <dubbo:registry address="multicast://224.5.6.7:1234"/>-->
-    <dubbo:registry protocol="zookeeper" address="192.168.111.129:2181" />
+    <dubbo:registry protocol="zookeeper" address="192.168.137.128:2181" />
     <dubbo:reference id="providerXmlService" interface="com.service.ProviderXmlService" version="1.0.0"/>
     <dubbo:reference id="p2XmlService" interface="com.service.P2XmlService" version="1.0.1"/>
     <!-- 过滤器 -->
