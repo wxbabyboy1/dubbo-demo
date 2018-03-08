@@ -30,6 +30,9 @@
     <!-- 泛化引用 -->
     <dubbo:reference id="genericDemoService" interface="com.service.GenericDemoService" version="1.0.1" generic="true" />
 
+    <!-- 泛化实现 -->
+    <dubbo:reference id="genericImplService" interface="com.service.BarService" version="1.0.1"/>
+
     <!-- 关闭所有服务的启动时检查 (启动时检查提供者是否存在，true报错，false忽略)： -->
     <dubbo:consumer check="false" />
 </beans>
