@@ -28,6 +28,12 @@
     <bean id="eventService" class="com.notify.EventServiceImpl"/>
     <dubbo:service interface="com.service.EventService" ref="eventService" version="1.0.0"/>
 
+    <!-- 上下文 -->
+    <bean id="contextAAService" class="com.context.ContextAAServiceImpl"/>
+    <dubbo:service interface="com.service.ContextAAService" ref="contextAAService" version="1.0.1" />
+    <bean id="contextBBService" class="com.context.ContextBBServiceImpl"/>
+    <dubbo:service interface="com.service.ContextBBService" ref="contextBBService" version="1.0.2" />
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>
