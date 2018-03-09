@@ -9,11 +9,13 @@
     <dubbo:registry protocol="zookeeper" address="192.168.111.129:2181,192.168.111.129:2182,192.168.111.129:2183" />
     <dubbo:protocol name="dubbo" port="20880"/>
 
-    <dubbo:service interface="com.service.ProviderXmlService" ref="paroviderXmlService" version="1.0.0" />
+    <!-- 分组 不同版本号 start -->
     <bean id="paroviderXmlService" class="com.service.ProviderXmlServiceImpl"/>
+    <dubbo:service interface="com.service.ProviderXmlService" ref="paroviderXmlService" version="1.0.0" />
 
-    <dubbo:service interface="com.service.P2XmlService" ref="p2XmlService" version="1.0.1" />
     <bean id="p2XmlService" class="com.service.P2XmlServiceImpl"/>
+    <dubbo:service interface="com.service.P2XmlService" ref="p2XmlService" version="1.0.1" />
+    <!-- 分组 不同版本号 end-->
 
     <!-- filter -->
     <bean id="filterService" class="com.filter.FilterServiceImpl"/>
