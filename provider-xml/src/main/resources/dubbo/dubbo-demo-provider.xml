@@ -75,5 +75,5 @@
     <dubbo:service interface="com.service.ValidationService" ref="validationService" version="1.0.1" />
 
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
-    <dubbo:provider timeout="10000" retries="1"/>
+    <dubbo:provider listener="bb" timeout="10000" retries="1" />
 </beans>
