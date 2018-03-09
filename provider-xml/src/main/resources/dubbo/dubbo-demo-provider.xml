@@ -6,7 +6,7 @@
     <dubbo:application name="demo-provider"/>
     <!--
     <dubbo:registry address="multicast://224.5.6.7:1234"/>-->
-    <dubbo:registry protocol="zookeeper" address="192.168.137.128:2181,192.168.137.128:2182,192.168.137.128:2183" />
+    <dubbo:registry protocol="zookeeper" address="192.168.111.129:2181,192.168.111.129:2182,192.168.111.129:2183" />
     <dubbo:protocol name="dubbo" port="20880"/>
 
     <dubbo:service interface="com.service.ProviderXmlService" ref="paroviderXmlService" version="1.0.0" />
@@ -63,6 +63,10 @@
             <!--<dubbo:argument type="com.demo.CallbackListener" callback="true" />-->
         </dubbo:method>
     </dubbo:service>
+
+    <!--  本地存根 调用provider -->
+    <bean id="stubDemoService" class="com.stub.StubServiceImpl"/>
+    <dubbo:service interface="com.service.StubDemoService" ref="stubDemoService" stub="true"/>
 
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
