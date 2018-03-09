@@ -70,6 +70,10 @@
     <bean id="stubDemoService" class="com.stub.StubServiceImpl"/>
     <dubbo:service interface="com.service.StubDemoService" ref="stubDemoService" stub="true"/>
 
+    <!-- 验证 暴露服务-->
+    <bean id="validationService" class="com.validation.ValidationServiceImpl"/>
+    <dubbo:service interface="com.service.ValidationService" ref="validationService" version="1.0.1" />
+
     <!-- 设置超时，可查看优先级：文档 5.1XML配置-->
     <dubbo:provider timeout="10000" retries="1"/>
 </beans>
